@@ -5,11 +5,49 @@
     <title>ГЕО-ОТЗЫВ</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <link rel="stylesheet" href="/2021-02-13-js-geootzyv/css/main.css">
+    <link rel="stylesheet" href="/2021-02-13-js-geootzyv/style/main.css">
+    <link rel="icon" href="/2021-02-13-js-geootzyv/images/favicon.svg" type="image/svg+xml">
 </head>
 
 <body>
-    <h1>Начало работы</h1>
+    <div id="map">
+        <!-- <div class="balloon center">
+            <ul class="feedbacks">
+                <li class="fb">
+                    <span class="name">Сергей</span>
+                    <span class="title">Кафе</span>
+                    <span class="data">12.01.2020</span>
+                    <div class="feed">Очень хорошее место!</div>
+                </li>
+                <li class="fb">
+                    <span class="name">Дима</span>
+                    <span class="title">Пятерочка</span>
+                    <span class="data">31.12.2020</span>
+                    <div class="feed">Вкусное шампанское!</div>
+                </li>
+            </ul>
+
+            <hr>
+            <h1>Отзыв:</h1>
+            <input class="balloon__name" type="text" placeholder="Укажите ваше имя">
+            <input class="balloon__place" type="text" placeholder="Укажите место">
+            <textarea class="balloon__otzyv" placeholder="Оставьте отзыв"></textarea>
+            <button class="balloon__add">Добавить</button>
+        </div> -->
+    </div>
+
+    <script type="html/template" id="balloon--zero">
+        <div class="balloon">
+            <h1>Отзыв:</h1>
+            <input class="balloon__name" type="text" placeholder="Укажите ваше имя">
+            <input class="balloon__place" type="text" placeholder="Укажите место">
+            <textarea class="balloon__otzyv" placeholder="Оставьте отзыв"></textarea>
+            <button class="balloon__add">Добавить</button>
+        </div>
+    </script>
+
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
+    <script src="/2021-02-13-js-geootzyv/script.js"></script>
 </body>
 
 </html>
