@@ -74,6 +74,7 @@ body {
 }
 
 #map [id*="id_"] {
+    width: 360px !important;
     height: auto !important;
 }
 
@@ -97,7 +98,7 @@ body {
 
 .balloon {
     z-index: 100;
-    min-width: 354px;
+    width: auto;
     padding: 24px 20px;
     display: flex;
     flex-flow: column nowrap;
@@ -108,7 +109,8 @@ body {
 
 .feedbacks {
     width: 90%;
-    height: 80px;
+    height: auto;
+    max-height: 100px;
     overflow: auto;
 }
 

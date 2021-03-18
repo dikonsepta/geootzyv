@@ -1,7 +1,7 @@
 (function () {
     let date = new Date();
     let newCoords;
-    let balloonZero = document.querySelector("#balloon--zero").innerHTML;
+    let balloonBlank = document.querySelector("#balloon--blank").innerHTML;
 
 
     function dateValid(num) {
@@ -14,6 +14,7 @@
     let placemarks = [
             [56.846717, 53.197888], // генеральский дом
             [56.852676, 53.207358], // центральная площадь
+            [56.849288, 53.223287], // удгу
             [56.849288, 53.223287] // удгу
         ],
         geoObjects = [];
@@ -92,24 +93,28 @@
 
             feedbacks.forEach(obj => {
                 for (let key in obj) {
-                    if (JSON.stringify(obj[key]) === JSON.stringify(coords)) {
-                        let name = obj.name;
-                        let title = obj.title;
-                        let data = obj.data;
-                        let feed = obj.feed;
+                    if (JSON.stringify(obj[key]) === JSON.stringify(coords) ||
+                        JSON.stringify(coords).includes(JSON.stringify(obj[key]))) {
 
-                        list +=
+                        let review =
                             '<li class="fb">' +
-                            '<span class="name">' + name + '</span>' +
-                            '<span class="title">' + title + '</span>' +
-                            '<span class="data">' + data + '</span>' +
-                            '<div class="feed">' + feed + '</div>' +
+                            '<span class="name">' + obj.name + '</span>' +
+                            '<span class="title">' + obj.title + '</span>' +
+                            '<span class="data">' + obj.data + '</span>' +
+                            '<p class="feed">' + obj.feed + '</p>' +
                             '</li>';
+
+                        if (Array.isArray(Array.isArray(coords))) {
+                            coords.forEach(coordsCluster =>
+                                list += review);
+                        } else {
+                            list += review;
+                        }
                     }
                 }
             });
 
-            let balloonPositive =
+            let balloonFilled =
                 '<div class="balloon">' +
                 '<ul class="feedbacks">' +
                 list +
@@ -122,7 +127,7 @@
                 '<button class="balloon__add">Добавить</button>' +
                 '</div>';
 
-            return (list !== '') ? balloonPositive : balloonZero;
+            return (list !== '') ? balloonFilled : balloonBlank;
         }
 
 
@@ -130,7 +135,7 @@
             if (!map.balloon.isOpen()) {
                 newCoords = e.get("coords");
                 map.balloon.open(newCoords, {
-                    contentBody: `${balloonZero}`
+                    contentBody: `${balloonBlank}`
                 });
             } else {
                 map.balloon.close();
@@ -139,8 +144,18 @@
 
 
         map.geoObjects.events.add("click", function (e) {
-            newCoords = e.get("target").geometry.getCoordinates();
-            e.get("target").properties._data.balloonContent = getContent(newCoords);
+            let newCluster = e.get("target").properties._data.geoObjects;
+
+            if (newCluster) {
+                let coordsCluster = [];
+                newCluster.forEach(mark => coordsCluster.push(mark.geometry.getCoordinates()));
+                clusterer.options.set("clusterBalloonContentLayout",
+                    ymaps.templateLayoutFactory.createClass(getContent(coordsCluster)))
+                
+            } else {
+                newCoords = e.get("target").geometry.getCoordinates();
+                e.get("target").properties._data.balloonContent = getContent(newCoords);
+            }
         });
 
 
@@ -162,10 +177,15 @@
                 geoObjects.push(newMarker);
                 map.geoObjects.add(newMarker);
                 clusterer.add(geoObjects);
+                
             } else if (e.target.tagName === "BUTTON") {
                 let inputs = e.target.closest(".balloon").querySelectorAll('input, textarea');
                 for (let el of inputs) {
-                    el.style.borderColor = "#FF5722";
+                    if (!el.value) {
+                        el.style.borderColor = "#FF5722";
+                    } else {
+                        el.style.borderColor = "#BDBDBD";
+                    };
                 }
             }
         });
@@ -174,7 +194,7 @@
         for (let i = 0; i < placemarks.length; i++) {
             const coords = placemarks[i];
             geoObjects[i] = new ymaps.Placemark(coords, {
-                balloonContent: `${getContent(newCoords)}`
+                balloonContent: `${getContent(coords)}`
             }, {
                 iconLayout: "default#image",
                 iconImageHref: "images/marker.svg",
@@ -185,9 +205,15 @@
         }
 
 
-        let clusterer = new ymaps.Clusterer();
-        clusterer.options.set("gridSize", 100);
-        clusterer.options.set("clusterIconColor", "#FF5722")
+        let clusterer = new ymaps.Clusterer({
+            gridSize: 100,
+            groupByCoordinates: false,
+            clusterBalloonMaxHeight: 360,
+            clusterIconColor: "#FF5722",
+            clusterDisableClickZoom: true,
+            clusterOpenBalloonOnClick: true,
+            clusterBalloonContentLayout: ymaps.templateLayoutFactory.createClass(balloonBlank)
+        });
         map.geoObjects.add(clusterer);
         clusterer.add(geoObjects);
     }
