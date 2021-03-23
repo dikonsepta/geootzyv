@@ -8,16 +8,17 @@ class GeoOtzyv {
             this.balloonBlank);
 
         this.map.init().then(this.onInit.bind(this));
+
+        this.localS = new LocalStorage();
+        this.localS.initStorage();
     }
 
 
 
-    async onInit() {
-        // await
-
-        for (let i = 0; i < placemarks.length; i++) {
-            this.map.createPlacemark(placemarks[i]);
-        }
+    onInit() {
+        this.localS.inArray().forEach(obj =>
+            this.map.createPlacemark(obj.place)
+        );
 
         document.body.addEventListener('click', this.onDocumentClick.bind(this));
     }
@@ -43,13 +44,15 @@ class GeoOtzyv {
         let feed = form.querySelector(".balloon__otzyv").value;
 
         if (name && title && data && feed) {
-            feedbacks.push({
+            let newFeedback = {
+                id: localStorage.length + 1,
                 place: this.map.newCoords,
                 name: name,
                 title: title,
                 data: data,
                 feed: feed
-            });
+            }
+            this.localS.addFeedback(newFeedback);
 
             return true;
 
@@ -63,17 +66,22 @@ class GeoOtzyv {
     getContent(coords) {
         let list = '';
 
-        feedbacks.forEach(obj => {
+        this.localS.inArray().forEach(obj => {
+            let id;
+
             for (let key in obj) {
-                if (JSON.stringify(obj[key]) === JSON.stringify(coords) ||
-                    JSON.stringify(coords).includes(JSON.stringify(obj[key]))) {
+                if (key === "id") id = obj['id'];
+
+                if (key === "place" &&
+                    (JSON.stringify(obj[key]) === JSON.stringify(coords) ||
+                        JSON.stringify(coords).includes(JSON.stringify(obj[key])))) {
 
                     let review =
-                        '<li class="fb">' +
+                        '<li class="fb" ' + 'id=' + `${id}` + '>' +
                         '<span class="name">' + obj.name + '</span>' +
                         '<span class="title">' + obj.title + '</span>' +
                         '<span class="data">' + obj.data + '</span>' +
-                        '<p class="feed">' + obj.feed + '</p>' +
+                        '<p class="feed" title="Удалить">' + obj.feed + '</p>' +
                         '</li>';
 
                     if (Array.isArray(Array.isArray(coords))) {
@@ -88,7 +96,7 @@ class GeoOtzyv {
 
         let balloonFilled =
             '<div class="balloon">' +
-            '<ul class="feedbacks">' + list + '</ul>' + 
+            '<ul class="feedbacks">' + list + '</ul>' +
             '<hr>' +
             '<h1>Отзыв:</h1>' +
             '<input class="balloon__name" type="text" placeholder="Укажите ваше имя">' +
@@ -120,11 +128,12 @@ class GeoOtzyv {
     onDocumentClick(e) {
         e.preventDefault();
 
-        if (e.target.tagName === "BUTTON" && this.formValidate(e.target.closest(".balloon"))) {
+        if (e.target.tagName === "BUTTON" && e.target.classList.contains("balloon__add") &&
+            this.formValidate(e.target.closest(".balloon"))) {
             this.map.closeBalloon();
             this.map.createPlacemark();
 
-        } else if (e.target.tagName === "BUTTON") {
+        } else if (e.target.tagName === "BUTTON" && e.target.classList.contains("balloon__add")) {
             let inputs = e.target.closest(".balloon").querySelectorAll('input, textarea');
 
             for (let el of inputs) {
@@ -135,6 +144,11 @@ class GeoOtzyv {
                     el.style.borderColor = "#BDBDBD";
                 };
             }
+
+        } else if (e.target.tagName === "BUTTON" && e.target.classList.contains("balloon__remove")) {
+            alert("Очистить локальное хранилище и перезагрузить страницу?");
+            this.localS.clearStorage();
+            window.location.reload();
         }
     }
 }

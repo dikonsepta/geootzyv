@@ -4,6 +4,8 @@ class YaMap {
         this.getContent = getContent;
         this.balloonBlank = balloonBlank;
         this.newCoords;
+
+        this.localS = new LocalStorage();
     }
 
 
@@ -26,12 +28,7 @@ class YaMap {
 
 
     createPlacemark(coords) {
-        if (this.newCoords && !coords) {
-            placemarks.push(this.newCoords);
-
-        } else {
-            this.newCoords = coords;
-        }
+        if (coords) this.newCoords = coords;
 
         let newMarker = new ymaps.Placemark(this.newCoords, {
             balloonContent: `${this.getContent(this.newCoords)}`
@@ -60,10 +57,12 @@ class YaMap {
         this.map.events.add("click", e => {
             if (this.map.balloon.isOpen()) {
                 this.closeBalloon();
+                // document.querySelector("#map").classList.toggle("blackout");
 
             } else {
                 this.newCoords = e.get("coords");
                 this.onClick(this.newCoords);
+                // document.querySelector("#map").classList.toggle("blackout");
             }
         });
 
