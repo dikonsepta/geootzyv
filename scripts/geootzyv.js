@@ -31,7 +31,7 @@ class GeoOtzyv {
             return (num < 10) ? `0${num}` : `${num}`
         }
 
-        let now = `${dateValid(date.getDate())}.${dateValid(date.getMonth())}.${date.getFullYear()}`;
+        let now = `${dateValid(date.getDate())}.${dateValid(date.getMonth() + 1)}.${date.getFullYear()}`;
         return now;
     }
 
