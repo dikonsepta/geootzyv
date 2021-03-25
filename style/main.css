@@ -23,7 +23,7 @@ html,
 body {
     width: 100%;
     height: 100%;
-    position: relative;
+    /* position: relative; */
 }
 
 .center {
@@ -44,10 +44,12 @@ body {
 }
 
 #map [class*="ymaps-"][class*="-ground-pane"] {
+    -webkit-filter: grayscale(100%) brightness(100%) !important;
     filter: grayscale(100%) brightness(100%) !important;
 }
 
 #map.blackout [class*="ymaps-"][class*="-ground-pane"] {
+    -webkit-filter: grayscale(100%) brightness(80%) !important;
     filter: grayscale(100%) brightness(80%) !important;
 }
 
@@ -70,6 +72,7 @@ body {
 }
 
 [class*="ymaps-"][class*="-balloon__close-button"]:hover {
+    -webkit-filter: brightness(80%) !important;
     filter: brightness(80%) !important;
 }
 
@@ -192,19 +195,18 @@ button:hover {
 }
 
 .balloon__remove {
+    transition: background-color .3s, box-shadow .3s;
     background-color: #536DFE;
+    box-shadow: 0px 0px 100px 100px rgba(255, 255, 255, .8);
     margin-top: 0;
-
     z-index: 1000;
     position: absolute;
     top: 5%;
     right: 5%;
-    transition: .3s;
-    box-shadow: 0px 0px 100px 100px rgba(255, 255, 255, .8);
 }
 
 .balloon__remove:hover {
+    transition: background-color .3s, box-shadow .3s;
     background-color: #303F9F;
-    transition: .3s;
     box-shadow: 0px 0px 100px 100px rgba(255, 255, 255, .5);
 }

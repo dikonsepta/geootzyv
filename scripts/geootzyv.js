@@ -2,12 +2,12 @@ class GeoOtzyv {
     constructor() {
         this.balloonBlank = document.querySelector("#balloon--blank").innerHTML;
 
-        this.map = new YaMap(
+        this.myMap = new YaMap(
             this.onClick.bind(this),
             this.getContent.bind(this),
             this.balloonBlank);
 
-        this.map.init().then(this.onInit.bind(this));
+        this.myMap.init().then(this.onInit.bind(this));
 
         this.localS = new LocalStorage();
         this.localS.initStorage();
@@ -17,7 +17,7 @@ class GeoOtzyv {
 
     onInit() {
         this.localS.inArray().forEach(obj =>
-            this.map.createPlacemark(obj.place)
+            this.myMap.createPlacemark(obj.place)
         );
 
         document.body.addEventListener('click', this.onDocumentClick.bind(this));
@@ -46,7 +46,7 @@ class GeoOtzyv {
         if (name && title && data && feed) {
             let newFeedback = {
                 id: localStorage.length + 1,
-                place: this.map.newCoords,
+                place: this.myMap.newCoords,
                 name: name,
                 title: title,
                 data: data,
@@ -120,7 +120,7 @@ class GeoOtzyv {
             content = this.getContent(coords);
         }
 
-        this.map.openBalloon(coords, content);
+        this.myMap.openBalloon(coords, content);
     }
 
 
@@ -130,8 +130,8 @@ class GeoOtzyv {
 
         if (e.target.tagName === "BUTTON" && e.target.classList.contains("balloon__add") &&
             this.formValidate(e.target.closest(".balloon"))) {
-            this.map.closeBalloon();
-            this.map.createPlacemark();
+            this.myMap.closeBalloon();
+            this.myMap.createPlacemark();
 
         } else if (e.target.tagName === "BUTTON" && e.target.classList.contains("balloon__add")) {
             let inputs = e.target.closest(".balloon").querySelectorAll('input, textarea');
