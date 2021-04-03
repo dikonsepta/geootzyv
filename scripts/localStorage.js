@@ -42,7 +42,7 @@ class LocalStorage {
         if (localStorage.length === 0) {
 
             myFeedbacks.forEach(feed =>
-                localStorage[`${localStorage.length + 1}`] = `${JSON.stringify(feed)}`
+                localStorage[`geootzyv${localStorage.length + 1}`] = `${JSON.stringify(feed)}`
             );
 
         }
@@ -50,9 +50,13 @@ class LocalStorage {
 
 
     addFeedback(newFeedback) {
-        localStorage.setItem(`${localStorage.length + 1}`, `${JSON.stringify(newFeedback)}`);
+        localStorage.setItem(`geootzyv${localStorage.length + 1}`, `${JSON.stringify(newFeedback)}`);
     }
 
+
+    // removeFeedback(id) {
+    //     localStorage.removeItem(`geootzyv${id}`);
+    // }
 
 
     clearStorage() {
@@ -63,7 +67,7 @@ class LocalStorage {
     inArray() {
         let feedbacks = [];
         for (let i = 1; i <= localStorage.length; i++) {
-            let obj = JSON.parse(localStorage.getItem(i));
+            let obj = JSON.parse(localStorage.getItem(`geootzyv${i}`));
             feedbacks.push(obj);
         }
         return feedbacks;

@@ -149,7 +149,12 @@ class GeoOtzyv {
             alert("Очистить локальное хранилище и перезагрузить страницу?");
             this.localS.clearStorage();
             window.location.reload();
+
         }
+        // else if (e.target.tagName === "SPAN" && e.target.classList.contains("name")) {
+        //     let removeID = e.target.closest("li").getAttribute("id");
+        //     this.myMap.deletePlacemark(removeID);
+        // }
     }
 }
 

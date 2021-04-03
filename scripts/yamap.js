@@ -45,6 +45,11 @@ class YaMap {
     }
 
 
+    // deletePlacemark(placemark) {
+    //     console.log(this.map.geoObjects);
+    //     console.log(this.map.clusterer);
+    // }
+
 
     initMap() {
         this.map = new ymaps.Map("map", {
