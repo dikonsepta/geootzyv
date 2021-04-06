@@ -14,7 +14,7 @@ class YaMap {
         await new Promise(resolve => ymaps.ready(resolve));
         this.initMap();
     }
-
+    
 
 
     openBalloon(coords, content) {
@@ -27,7 +27,7 @@ class YaMap {
 
 
 
-    createPlacemark(coords) {
+    createPlacemark(coords, id = JSON.parse(localStorage.getItem("geootzyv")).count - 1) {
         if (coords) this.newCoords = coords;
 
         let newMarker = new ymaps.Placemark(this.newCoords, {
@@ -39,16 +39,18 @@ class YaMap {
             iconImageOffset: [-32, -64]
         });
 
+        newMarker.GeoOtzyvID = id;
         myObjects.push(newMarker);
         this.map.geoObjects.add(newMarker);
         this.map.clusterer.add(myObjects);
     }
 
 
-    // deletePlacemark(placemark) {
-    //     console.log(this.map.geoObjects);
-    //     console.log(this.map.clusterer);
-    // }
+
+    deletePlacemark(placemark) {
+        this.map.geoObjects.remove(placemark);
+    }
+
 
 
     initMap() {
@@ -62,12 +64,10 @@ class YaMap {
         this.map.events.add("click", e => {
             if (this.map.balloon.isOpen()) {
                 this.closeBalloon();
-                // document.querySelector("#map").classList.toggle("blackout");
 
             } else {
                 this.newCoords = e.get("coords");
                 this.onClick(this.newCoords);
-                // document.querySelector("#map").classList.toggle("blackout");
             }
         });
 
@@ -94,14 +94,9 @@ class YaMap {
                 let coordsCluster = [];
                 newCluster.forEach(mark =>
                     coordsCluster.push(mark.geometry.getCoordinates()));
-                // this.onClick(e.get("target").geometry.getCoordinates(), coordsCluster);
                 this.map.clusterer.options.set("clusterBalloonContentLayout",
                     ymaps.templateLayoutFactory.createClass(this.getContent(coordsCluster)))
-
-            } else {
-                // this.onClick(this.newCoords);
             }
         });
-        // this.map.clusterer.events.add("click", e => {});
     }
 }

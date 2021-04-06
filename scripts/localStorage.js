@@ -3,28 +3,28 @@ var myObjects = [];
 
 
 var myFeedbacks = [{
-    id: 1,
+    // id: 1,
     place: [56.846717, 53.197888],
     name: "Диана",
     title: "Генеральский Дом",
     data: "03.11.2019",
     feed: "Обычно туристы ходят по всяким музеям и храмам, а лучше бы поинтересовались этим местом!"
 }, {
-    id: 2,
+    // id: 2,
     place: [56.852676, 53.207358],
     name: "Вера",
     title: "Центральная площадь",
     data: "01.09.2020",
     feed: "Варламовы отлично постралаись и получилось крутое общественное пространство!"
 }, {
-    id: 3,
+    // id: 3,
     place: [56.849288, 53.223287],
     name: "Вера",
     title: "УдГу",
     data: "25.05.2018",
     feed: "На*ер УдГУ! И всю систему образования!"
 }, {
-    id: 4,
+    // id: 4,
     place: [56.849288, 53.223287],
     name: "Диана",
     title: "УдГУ",
@@ -39,37 +39,66 @@ class LocalStorage {
 
 
     initStorage() {
-        if (localStorage.length === 0) {
+        if (localStorage.getItem("geootzyv") === null ||
+            JSON.parse(localStorage.getItem("geootzyv")).feeds.length === 0) {
 
-            myFeedbacks.forEach(feed =>
-                localStorage[`geootzyv${localStorage.length + 1}`] = `${JSON.stringify(feed)}`
-            );
+            localStorage.setItem("geootzyv", JSON.stringify({
+                count: 1,
+                feeds: []
+            }));
 
+            let geoArray = [];
+            myFeedbacks.forEach(feed => {
+                feed.id = JSON.parse(localStorage.getItem("geootzyv")).count;
+                geoArray.push(feed);
+                localStorage.setItem("geootzyv", JSON.stringify({
+                    count: JSON.parse(localStorage.getItem("geootzyv")).count + 1,
+                    feeds: []
+                }));
+            });
+
+            localStorage.setItem("geootzyv", JSON.stringify({
+                count: JSON.parse(localStorage.getItem("geootzyv")).count,
+                feeds: geoArray
+            }));
         }
     }
 
 
     addFeedback(newFeedback) {
-        localStorage.setItem(`geootzyv${localStorage.length + 1}`, `${JSON.stringify(newFeedback)}`);
+        let geoArray = JSON.parse(localStorage.getItem("geootzyv")).feeds;
+        newFeedback.id = JSON.parse(localStorage.getItem("geootzyv")).count;
+        geoArray.push(newFeedback);
+
+        localStorage.setItem("geootzyv", JSON.stringify({
+            count: JSON.parse(localStorage.getItem("geootzyv")).count + 1,
+            feeds: geoArray
+        }));
     }
 
 
-    // removeFeedback(id) {
-    //     localStorage.removeItem(`geootzyv${id}`);
-    // }
+    removeFeedback(id) {
+        let geoArray = JSON.parse(localStorage.getItem("geootzyv")).feeds;
+        geoArray.forEach((feed, i, arr) => {
+            if (feed.id === id) {
+                arr.splice(i, 1);
+            }
+        });
+
+        localStorage.setItem("geootzyv", JSON.stringify({
+            count: JSON.parse(localStorage.getItem("geootzyv")).count,
+            feeds: geoArray
+        }));
+    }
 
 
     clearStorage() {
-        localStorage.clear();
+        localStorage.removeItem("geootzyv");
     }
 
 
     inArray() {
-        let feedbacks = [];
-        for (let i = 1; i <= localStorage.length; i++) {
-            let obj = JSON.parse(localStorage.getItem(`geootzyv${i}`));
-            feedbacks.push(obj);
-        }
-        return feedbacks;
+        let geoArray = JSON.parse(localStorage.getItem("geootzyv")).feeds;
+        return geoArray;
     }
 }

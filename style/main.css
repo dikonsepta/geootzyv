@@ -48,11 +48,6 @@ body {
     filter: grayscale(100%) brightness(100%) !important;
 }
 
-#map.blackout [class*="ymaps-"][class*="-ground-pane"] {
-    -webkit-filter: grayscale(100%) brightness(80%) !important;
-    filter: grayscale(100%) brightness(80%) !important;
-}
-
 [class*="ymaps-"][class*="-balloon__content"] {
     position: relative !important;
     padding: 0 !important;
@@ -128,6 +123,15 @@ body {
 .fb span {
     font-size: 14px;
     margin-right: 5px;
+}
+
+.fb span.remove {
+    cursor: help;
+    color: #536DFE;
+}
+
+.fb span.remove:hover {
+    color: #E64A19;
 }
 
 .fb span:last-of-type {

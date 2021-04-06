@@ -16,9 +16,9 @@ class GeoOtzyv {
 
 
     onInit() {
-        this.localS.inArray().forEach(obj =>
-            this.myMap.createPlacemark(obj.place)
-        );
+        this.localS.inArray().forEach(obj => {
+            this.myMap.createPlacemark(obj.place, obj.id)
+        });
 
         document.body.addEventListener('click', this.onDocumentClick.bind(this));
     }
@@ -45,7 +45,6 @@ class GeoOtzyv {
 
         if (name && title && data && feed) {
             let newFeedback = {
-                id: localStorage.length + 1,
                 place: this.myMap.newCoords,
                 name: name,
                 title: title,
@@ -67,21 +66,18 @@ class GeoOtzyv {
         let list = '';
 
         this.localS.inArray().forEach(obj => {
-            let id;
-
             for (let key in obj) {
-                if (key === "id") id = obj['id'];
-
                 if (key === "place" &&
                     (JSON.stringify(obj[key]) === JSON.stringify(coords) ||
                         JSON.stringify(coords).includes(JSON.stringify(obj[key])))) {
 
                     let review =
-                        '<li class="fb" ' + 'id=' + `${id}` + '>' +
+                        '<li class="fb" ' + 'id=' + `${obj.id}` + '>' +
                         '<span class="name">' + obj.name + '</span>' +
                         '<span class="title">' + obj.title + '</span>' +
                         '<span class="data">' + obj.data + '</span>' +
-                        '<p class="feed" title="Удалить">' + obj.feed + '</p>' +
+                        '<p class="feed">' + obj.feed +
+                        '<span class="remove" title="Удалить этот отзыв"> ✖</span>' + '</p>' +
                         '</li>';
 
                     if (Array.isArray(Array.isArray(coords))) {
@@ -131,7 +127,7 @@ class GeoOtzyv {
         if (e.target.tagName === "BUTTON" && e.target.classList.contains("balloon__add") &&
             this.formValidate(e.target.closest(".balloon"))) {
             this.myMap.closeBalloon();
-            this.myMap.createPlacemark();
+            this.myMap.createPlacemark(undefined, undefined);
 
         } else if (e.target.tagName === "BUTTON" && e.target.classList.contains("balloon__add")) {
             let inputs = e.target.closest(".balloon").querySelectorAll('input, textarea');
@@ -150,11 +146,16 @@ class GeoOtzyv {
             this.localS.clearStorage();
             window.location.reload();
 
+        } else if (e.target.tagName === "SPAN" && e.target.classList.contains("remove")) {
+            let removeID = e.target.closest("li").getAttribute("id");
+            myObjects.forEach(mark => {
+                if (mark.GeoOtzyvID == removeID) {
+                    this.myMap.deletePlacemark(mark);
+                    this.localS.removeFeedback(mark.GeoOtzyvID);
+                    window.location.reload();
+                }
+            });
         }
-        // else if (e.target.tagName === "SPAN" && e.target.classList.contains("name")) {
-        //     let removeID = e.target.closest("li").getAttribute("id");
-        //     this.myMap.deletePlacemark(removeID);
-        // }
     }
 }
 
