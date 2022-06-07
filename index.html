@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html lang="ru">
+    <head>
+        <title>ГЕО-ОТЗЫВ</title>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+        />
+        <link rel="stylesheet" href="/geootzyv/style/main.css" />
+        <link
+            rel="icon"
+            href="/geootzyv/images/favicon.svg"
+            type="image/svg+xml"
+        />
+    </head>
 
-<head>
-    <title>ГЕО-ОТЗЫВ</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <link rel="stylesheet" href="/2021-02-13-js-geootzyv/style/main.css">
-    <link rel="icon" href="/2021-02-13-js-geootzyv/images/favicon.svg" type="image/svg+xml">
-</head>
+    <body>
+        <button class="balloon__remove">Удалить свои отзывы</button>
 
-<body>
-    <button class="balloon__remove">Удалить свои отзывы</button>
-
-    <div id="map">
-        <!-- <div class="balloon center">
+        <div id="map">
+            <!-- <div class="balloon center">
             <ul class="feedbacks">
                 <li class="fb">
                     <span class="name">Сергей</span>
@@ -36,23 +42,22 @@
             <textarea class="balloon__otzyv" placeholder="Оставьте отзыв"></textarea>
             <button class="balloon__add">Добавить</button>
         </div> -->
-    </div>
-
-    <script type="html/template" id="balloon--blank">
-        <div class="balloon">
-            <h1>Отзыв:</h1>
-            <input class="balloon__name" type="text" placeholder="Укажите ваше имя">
-            <input class="balloon__place" type="text" placeholder="Укажите место">
-            <textarea class="balloon__otzyv" placeholder="Оставьте отзыв"></textarea>
-            <button class="balloon__add">Добавить</button>
         </div>
-    </script>
 
-    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
-    <!-- <script src="/2021-02-13-js-geootzyv/scripts/_script.js"></script> -->
-    <script src="/2021-02-13-js-geootzyv/scripts/localStorage.js"></script>
-    <script src="/2021-02-13-js-geootzyv/scripts/yamap.js"></script>
-    <script src="/2021-02-13-js-geootzyv/scripts/geootzyv.js"></script>
-</body>
+        <script type="html/template" id="balloon--blank">
+            <div class="balloon">
+                <h1>Отзыв:</h1>
+                <input class="balloon__name" type="text" placeholder="Укажите ваше имя">
+                <input class="balloon__place" type="text" placeholder="Укажите место">
+                <textarea class="balloon__otzyv" placeholder="Оставьте отзыв"></textarea>
+                <button class="balloon__add">Добавить</button>
+            </div>
+        </script>
 
+        <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
+        <!-- <script src="/geootzyv/scripts/_script.js"></script> -->
+        <script src="/geootzyv/scripts/localStorage.js"></script>
+        <script src="/geootzyv/scripts/yamap.js"></script>
+        <script src="/geootzyv/scripts/geootzyv.js"></script>
+    </body>
 </html>

@@ -1,8 +1,8 @@
-@import "./normalize.css";
+@import './normalize.css';
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 *:not(ymaps) {
-    font-family: "Roboto", Arial, sans-serif;
+    font-family: 'Roboto', Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: 16px;
@@ -33,8 +33,6 @@ body {
     transform: translate(-50%, -50%);
 }
 
-
-
 #map {
     width: 100%;
     height: 100%;
@@ -43,18 +41,18 @@ body {
     background-color: white;
 }
 
-#map [class*="ymaps-"][class*="-ground-pane"] {
+#map [class*='ymaps-'][class*='-ground-pane'] {
     -webkit-filter: grayscale(100%) brightness(100%) !important;
     filter: grayscale(100%) brightness(100%) !important;
 }
 
-[class*="ymaps-"][class*="-balloon__content"] {
+[class*='ymaps-'][class*='-balloon__content'] {
     position: relative !important;
     padding: 0 !important;
     margin: 0 !important;
 }
 
-[class*="ymaps-"][class*="-balloon__close-button"] {
+[class*='ymaps-'][class*='-balloon__close-button'] {
     position: absolute !important;
     padding: 0 !important;
     margin: 24px 20px 0 0 !important;
@@ -62,16 +60,16 @@ body {
     right: 0% !important;
     width: 22.4px !important;
     height: 22.4px !important;
-    background: url("/2021-02-13-js-geootzyv/images/close.svg") center center / 125% no-repeat !important;
+    background: url('/geootzyv/images/close.svg') center center / 125% no-repeat !important;
     opacity: 1 !important;
 }
 
-[class*="ymaps-"][class*="-balloon__close-button"]:hover {
+[class*='ymaps-'][class*='-balloon__close-button']:hover {
     -webkit-filter: brightness(80%) !important;
     filter: brightness(80%) !important;
 }
 
-#map [id*="id_"] {
+#map [id*='id_'] {
     width: 360px !important;
     height: auto !important;
 }
@@ -84,15 +82,13 @@ body {
 
 #map *::-webkit-scrollbar-thumb {
     background-clip: border-box !important;
-    background-color: #BDBDBD !important;
+    background-color: #bdbdbd !important;
     border-radius: 5px !important;
 }
 
 #map *::-webkit-scrollbar-thumb:hover {
     background-color: #757575 !important;
 }
-
-
 
 .balloon {
     z-index: 100;
@@ -102,7 +98,7 @@ body {
     flex-flow: column nowrap;
     justify-content: center;
     align-items: flex-start;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
 }
 
 .feedbacks {
@@ -127,11 +123,11 @@ body {
 
 .fb span.remove {
     cursor: help;
-    color: #536DFE;
+    color: #536dfe;
 }
 
 .fb span.remove:hover {
-    color: #E64A19;
+    color: #e64a19;
 }
 
 .fb span:last-of-type {
@@ -142,14 +138,14 @@ body {
     margin-top: 5px;
 }
 
-.fb *:not([class="name"]) {
+.fb *:not([class='name']) {
     color: #757575;
 }
 
 hr {
     width: 100%;
     height: 1px;
-    background-color: #BDBDBD;
+    background-color: #bdbdbd;
     margin-top: 20px;
     margin-bottom: 20px;
 }
@@ -164,8 +160,8 @@ input,
 textarea {
     width: 100%;
     height: 38px;
-    background: #FFFFFF;
-    border: 1px solid #BDBDBD;
+    background: #ffffff;
+    border: 1px solid #bdbdbd;
     border-radius: 3px;
     padding: 12px;
     margin-bottom: 10px;
@@ -174,15 +170,15 @@ textarea {
 
 input:focus,
 textarea:focus {
-    border: 1px solid #536DFE;
+    border: 1px solid #536dfe;
 }
 
 button {
-    background-color: #FF5722;
+    background-color: #ff5722;
     border-radius: 3px;
     padding: 12px 20px;
     margin-top: 10px;
-    color: #FFFFFF;
+    color: #ffffff;
     font-weight: bold;
     font-size: 14px;
     letter-spacing: 0.08em;
@@ -191,7 +187,7 @@ button {
 }
 
 button:hover {
-    background-color: #E64A19;
+    background-color: #e64a19;
 }
 
 .balloon__otzyv {
@@ -199,9 +195,9 @@ button:hover {
 }
 
 .balloon__remove {
-    transition: background-color .3s, box-shadow .3s;
-    background-color: #536DFE;
-    box-shadow: 0px 0px 100px 100px rgba(255, 255, 255, .8);
+    transition: background-color 0.3s, box-shadow 0.3s;
+    background-color: #536dfe;
+    box-shadow: 0px 0px 100px 100px rgba(255, 255, 255, 0.8);
     margin-top: 0;
     z-index: 1000;
     position: absolute;
@@ -210,7 +206,7 @@ button:hover {
 }
 
 .balloon__remove:hover {
-    transition: background-color .3s, box-shadow .3s;
-    background-color: #303F9F;
-    box-shadow: 0px 0px 100px 100px rgba(255, 255, 255, .5);
+    transition: background-color 0.3s, box-shadow 0.3s;
+    background-color: #303f9f;
+    box-shadow: 0px 0px 100px 100px rgba(255, 255, 255, 0.5);
 }
