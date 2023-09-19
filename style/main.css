@@ -1,6 +1,10 @@
 @import './normalize.css';
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
+:root {
+    color-scheme: only light;
+}
+
 *:not(ymaps) {
     font-family: 'Roboto', Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
